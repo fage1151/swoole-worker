@@ -11,5 +11,8 @@ $worker->onMessage = function($connect,$data){
   $connect->send('123');
 };
 $worker->count = 1;
+Worker::$stdoutFile = '/tmp/oauth.log';
+Worker::$logFile = __DIR__.'/workerman.log';
+Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__ ). ".pid";
 // 运行所有服务
 Worker::runAll();
