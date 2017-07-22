@@ -9,7 +9,7 @@ swoole_version >= 1.7.14
 ## Installation
 
 ```
-composer require workerman/workerman
+git clone https://git.oschina.net/FEIGE/swoole-worker.git
 ```
 
 ## Basic Usage
