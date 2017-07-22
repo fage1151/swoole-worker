@@ -37,7 +37,7 @@ class Swoole_event implements EventInterface{
      */
     public function __construct()
     {
-        $this->_eventBase = event_base_new();
+        $this->_eventBase = '';
     }
 
     /**
@@ -80,13 +80,15 @@ class Swoole_event implements EventInterface{
                 return $timer_id;
 
             default :
-                $fd_key    = (int)$fd;
-                $real_flag = $flag === self::EV_READ ? EV_READ | EV_PERSIST : EV_WRITE | EV_PERSIST;
+                $fd_key    = $fd;
+                $real_flag = $flag === self::EV_READ ? 1 : 2 ;
                 if($flag == self::EV_READ){
-                    swoole_event_add($fd_key,$func,null,SWOOLE_EVENT_READ);
+                    var_dump($fd_key);
+                    swoole_event_add($fd_key,$func);
                 }else{
                     swoole_event_add($fd_key,null,$func,SWOOLE_EVENT_WRITE);
                 }
+                $fd_key    = (int)$fd;
                 $this->_allEvents[$fd_key][$flag] = $fd_key;
 
                 return true;
@@ -183,7 +185,7 @@ class Swoole_event implements EventInterface{
     public function destroy()
     {
         foreach ($this->_eventSignal as $event) {
-            event_del($event);
+            swoole_event_del($event);
         }
     }
 }
