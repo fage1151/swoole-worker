@@ -4,7 +4,7 @@
 ## What is it
 此项目是workerman的swoole移植版本，移除了对pcntl,libevent,event扩展的依赖,转而使用swoole提供的swoole_process和Swoole_event，定时器采用swoole的swoole_timer
 ## Requires
-php_version >= 5.4
+php_version >= 5.4  
 A POSIX compatible operating system (Linux, OSX, BSD)  
 POSIX and Swoole extensions for PHP  
 swoole_version >= 1.7.14
