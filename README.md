@@ -2,13 +2,12 @@
 [![Gitter](https://badges.gitter.im/walkor/Workerman.svg)](https://gitter.im/walkor/Workerman?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
 
 ## What is it
-Workerman is an asynchronous event driven PHP framework with high performance for easily building fast, scalable network applications. Supports HTTP, Websocket, SSL and other custom protocols. Supports libevent, [HHVM](https://github.com/facebook/hhvm) , [ReactPHP](https://github.com/reactphp/react).
-
+此项目是workerman的swoole移植版本，移除了对pcntl,libevent,event扩展的依赖
 ## Requires
-PHP 5.3 or Higher  
+php_version >= 5.4
 A POSIX compatible operating system (Linux, OSX, BSD)  
-POSIX and PCNTL extensions for PHP  
-
+POSIX and Swoole extensions for PHP  
+swoole_version >= 1.7.14
 ## Installation
 
 ```
