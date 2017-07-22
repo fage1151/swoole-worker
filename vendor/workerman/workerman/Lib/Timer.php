@@ -45,7 +45,7 @@ class Timer
      */
     public static function init($event = null)
     {
-
+        static::$_tasks = array();
     }
 
     /**
@@ -69,7 +69,7 @@ class Timer
             return false;
         }
         $real_func = function () use ($func, $args,$persistent, &$timerid) {
-            call_user_func_array($func, [$timerid, $args]);
+            call_user_func_array($func, $args);
             if($persistent === false){
                 unset(self::$_tasks[$timerid]);
             }

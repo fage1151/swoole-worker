@@ -427,9 +427,9 @@ class Worker
         self::parseCommand();
         self::daemonize();
         self::initWorkers();
-        self::installSignal();
         self::saveMasterPid();
         self::forkWorkers();
+        self::installSignal();
         self::displayUI();
         self::resetStd();
         self::monitorWorkers();
@@ -730,17 +730,6 @@ class Worker
         swoole_process::signal(SIGUSR1, array('\Workerman\Worker', 'signalHandler'));
         // status
         swoole_process::signal(SIGUSR2, array('\Workerman\Worker', 'signalHandler'));
-
-        // ignore
-        //swoole_process::signal(SIGPIPE, null);
-        // stop
-      /*  pcntl_signal(SIGINT, array('\Workerman\Worker', 'signalHandler'), false);
-        // reload
-        pcntl_signal(SIGUSR1, array('\Workerman\Worker', 'signalHandler'), false);
-        // status
-        pcntl_signal(SIGUSR2, array('\Workerman\Worker', 'signalHandler'), false);
-        // ignore
-        pcntl_signal(SIGPIPE, SIG_IGN, false);*/
     }
 
     /**
@@ -750,27 +739,12 @@ class Worker
      */
     protected static function reinstallSignal()
     {
-        // uninstall stop signal handler
-/*        swoole_process::signal(SIGINT, array('\Workerman\Worker', 'signalHandler'));
-        // uninstall reload signal handler
-        swoole_process::signal(SIGUSR1, array('\Workerman\Worker', 'signalHandler'));
-        // uninstall  status signal handler
-        swoole_process::signal(SIGUSR2, array('\Workerman\Worker', 'signalHandler'));
-        swoole_process::signal(SIGUSR1, function (){self::log('sigusr1');});
-        swoole_process::signal(SIGUSR2, function (){self::log('SIGUSR2');});
-        swoole_process::signal(SIGINT, function (){self::log('SIGINT');});*/
-        // uninstall stop signal handler
-/*        pcntl_signal(SIGINT, SIG_IGN, false);
-        // uninstall reload signal handler
-        pcntl_signal(SIGUSR1, SIG_IGN, false);
-        // uninstall  status signal handler
-        pcntl_signal(SIGUSR2, SIG_IGN, false);*/
         // reinstall stop signal handler
-     /*   self::$globalEvent->add(SIGINT, EventInterface::EV_SIGNAL, array('\Workerman\Worker', 'signalHandler'));
-        // reinstall  reload signal handler
-        self::$globalEvent->add(SIGUSR1, EventInterface::EV_SIGNAL, array('\Workerman\Worker', 'signalHandler'));
+        swoole_process::signal(SIGINT, array('\Workerman\Worker', 'signalHandler'));
+        // reinstall reload signal handler
+        swoole_process::signal(SIGUSR1, array('\Workerman\Worker', 'signalHandler'));
         // reinstall  status signal handler
-        self::$globalEvent->add(SIGUSR2, EventInterface::EV_SIGNAL, array('\Workerman\Worker', 'signalHandler'));*/
+        swoole_process::signal(SIGUSR2, array('\Workerman\Worker', 'signalHandler'));
     }
 
     /**
@@ -792,9 +766,7 @@ class Worker
                 break;
             // Show status.
             case SIGUSR2:
-                var_dump($signal);
                 self::writeStatisticsToStatusFile();
-                //self::writeStatisticsToStatusFile();
                 break;
         }
     }
@@ -1177,7 +1149,7 @@ class Worker
             // Send reload signal to a worker process.
             swoole_process::kill($one_worker_pid, SIGUSR1);
             // If the process does not exit after self::KILL_WORKER_TIMER_TIME seconds try to kill it.
-            Timer::add(self::KILL_WORKER_TIMER_TIME, array('swoole_process','kill'), array($one_worker_pid, SIGKILL), false);
+            Timer::add(self::KILL_WORKER_TIMER_TIME, array('\swoole_process','kill'), array($one_worker_pid, SIGKILL), false);
         } // For child processes.
         else {
             $worker = current(self::$_workers);
@@ -1215,7 +1187,7 @@ class Worker
             // Send stop signal to all child processes.
             foreach ($worker_pid_array as $worker_pid) {
                 swoole_process::kill($worker_pid, SIGINT);
-                Timer::add(self::KILL_WORKER_TIMER_TIME, 'swoole_process::kill', array($worker_pid, SIGKILL), false);
+                Timer::add(self::KILL_WORKER_TIMER_TIME, array('swoole_process','kill'), array($worker_pid, SIGKILL), false);
             }
             // Remove statistics file.
             if (is_file(self::$_statisticsFile)) {
@@ -1281,9 +1253,9 @@ class Worker
 
             chmod(self::$_statisticsFile, 0722);
 
-            /*foreach (self::getAllWorkerPids() as $worker_pid) {
+            foreach (self::getAllWorkerPids() as $worker_pid) {
                 swoole_process::kill($worker_pid, SIGUSR2);
-            }*/
+            }
             return;
         }
 
