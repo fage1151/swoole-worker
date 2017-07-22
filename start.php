@@ -16,10 +16,10 @@ $worker->onMessage = function($connect,$data){
 };
 
 $worker->onWorkerStart = function($worker){
-//    Timer::add(2000,function(){
-//        echo 'timer'."\n";
-//    },[1,2,3],false);
-    swoole_timer_after(1,function(){echo 1;});
+    Timer::add(2000,function(){
+        echo 'timer'."\n";
+    },[1,2,3],false);
+
 };
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';
