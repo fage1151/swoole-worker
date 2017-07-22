@@ -47,13 +47,14 @@ class Timer
     {
 
     }
+
     /**
      * Add a timer.
      *
-     * @param int      $time_interval
+     * @param int $time_interval
      * @param callback $func
-     * @param mixed    $args
-     * @param bool     $persistent
+     * @param mixed $args
+     * @param bool $persistent
      * @return int/false
      */
     public static function add($time_interval, $func, $args = array(), $persistent = true)
@@ -67,20 +68,22 @@ class Timer
             echo new Exception("not callable");
             return false;
         }
-        $real_func = function($timerid)use($func,$args){
-            call_user_func($func,$timerid,$args);
-            unset(self::$_tasks[$timerid]);
+        $real_func = function () use ($func, $args,$persistent, &$timerid) {
+            call_user_func_array($func, [$timerid, $args]);
+            if($persistent === false){
+                unset(self::$_tasks[$timerid]);
+            }
         };
-        if($persistent === true){
-            $timerid = swoole_timer_tick($time_interval,$real_func);
-        }else{
-            $timerid = swoole_timer_after($time_interval,$real_func);
+        if ($persistent === true) {
+            $timerid = swoole_timer_tick($time_interval, $real_func);
+        } else {
+            $timerid = swoole_timer_after($time_interval, $real_func);
         }
         if (!isset(self::$_tasks)) {
             self::$_tasks = array();
         }
         self::$_tasks[$timerid] = array($func, (array)$args, $persistent, $time_interval);
-        return  $timerid;
+        return $timerid;
     }
 
 
@@ -107,8 +110,8 @@ class Timer
      */
     public static function delAll()
     {
-        if(count(self::$_tasks)>0){
-            foreach (self::$_tasks as $k => $v){
+        if (count(self::$_tasks) > 0) {
+            foreach (self::$_tasks as $k => $v) {
                 swoole_timer_clear($k);
             }
             self::$_tasks = array();

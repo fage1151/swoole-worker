@@ -16,8 +16,9 @@ $worker->onMessage = function($connect,$data){
 };
 
 $worker->onWorkerStart = function($worker){
-    Timer::add(2000,function(){
-        echo 'timer'."\n";
+    Timer::add(2000,function($timerid,$args){
+       echo $timerid."\n";
+        var_dump($args);
     },[1,2,3],false);
 
 };
