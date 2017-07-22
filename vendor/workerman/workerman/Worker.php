@@ -427,9 +427,9 @@ class Worker
         self::parseCommand();
         self::daemonize();
         self::initWorkers();
+        self::installSignal();
         self::saveMasterPid();
         self::forkWorkers();
-        self::installSignal();
         self::displayUI();
         self::resetStd();
         self::monitorWorkers();
@@ -1039,7 +1039,6 @@ class Worker
                         // Mark id is available.
                         $id                            = self::getId($worker_id, $pid);
                         self::$_idMap[$worker_id][$id] = 0;
-
                         break;
                     }
                 }
@@ -1091,7 +1090,7 @@ class Worker
     protected static function reload()
     {
         // For master process.
-        if (self::$_masterPid === getmypid()) {
+        if (self::$_masterPid === posix_getpid()) {
             // Set reloading state.
             if (self::$_status !== self::STATUS_RELOADING && self::$_status !== self::STATUS_SHUTDOWN) {
                 self::log("Workerman[" . basename(self::$_startFile) . "] reloading");
@@ -1180,7 +1179,7 @@ class Worker
             // Send stop signal to all child processes.
             foreach ($worker_pid_array as $worker_pid) {
                 swoole_process::kill($worker_pid, SIGINT);
-                Timer::add(self::KILL_WORKER_TIMER_TIME, array('swoole_process','kill'), array($worker_pid, SIGKILL), false);
+                Timer::add(self::KILL_WORKER_TIMER_TIME, array('\swoole_process','kill'), array($worker_pid, SIGKILL), false);
             }
             // Remove statistics file.
             if (is_file(self::$_statisticsFile)) {
