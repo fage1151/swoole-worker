@@ -37,7 +37,6 @@ class Timer
      */
     protected static $_tasks = array();
 
-
     /**
      * Init.
      *
@@ -68,11 +67,14 @@ class Timer
             echo new Exception("not callable");
             return false;
         }
-
+        $real_func = function($timerid)use($func,$args){
+            call_user_func($func,$timerid,$args);
+            unset(self::$_tasks[$timerid]);
+        };
         if($persistent === true){
-           $timerid = swoole_timer_tick($time_interval, $func, $args);
+            $timerid = swoole_timer_tick($time_interval,$real_func);
         }else{
-            return swoole_timer_after($time_interval, $func, $args);
+            $timerid = swoole_timer_after($time_interval,$real_func);
         }
         if (!isset(self::$_tasks)) {
             self::$_tasks = array();

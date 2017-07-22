@@ -780,7 +780,6 @@ class Worker
      */
     public static function signalHandler($signal)
     {
-        var_dump(getmypid());
         switch ($signal) {
             // Stop.
             case SIGINT:

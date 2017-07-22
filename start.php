@@ -4,11 +4,22 @@
  * php start.php start
  */
 
-use Workerman\Worker;
+use \Workerman\Worker;
+use \Workerman\Lib\Timer;
 require_once 'vendor/autoload.php';
 $worker = new Worker('http://127.0.0.1:8090');
+$worker->onConnect = function($connect){
+  $connect->send('sucess');
+};
 $worker->onMessage = function($connect,$data){
   $connect->send('123');
+};
+
+$worker->onWorkerStart = function($worker){
+//    Timer::add(2000,function(){
+//        echo 'timer'."\n";
+//    },[1,2,3],false);
+    swoole_timer_after(1,function(){echo 1;});
 };
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';

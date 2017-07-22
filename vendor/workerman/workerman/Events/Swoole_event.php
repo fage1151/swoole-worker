@@ -80,16 +80,14 @@ class Swoole_event implements EventInterface{
                 return $timer_id;
 
             default :
-                $fd_key    = $fd;
                 $real_flag = $flag === self::EV_READ ? 1 : 2 ;
                 if($flag == self::EV_READ){
-                    var_dump($fd_key);
-                    swoole_event_add($fd_key,$func);
+                    swoole_event_add($fd,$func);
                 }else{
-                    swoole_event_add($fd_key,null,$func,SWOOLE_EVENT_WRITE);
+                    swoole_event_add($fd,null,$func,SWOOLE_EVENT_WRITE);
                 }
                 $fd_key    = (int)$fd;
-                $this->_allEvents[$fd_key][$flag] = $fd_key;
+                $this->_allEvents[$fd_key][$flag] = $fd;
 
                 return true;
         }
