@@ -1,6 +1,4 @@
-# Workerman
-[![Gitter](https://badges.gitter.im/walkor/Workerman.svg)](https://gitter.im/walkor/Workerman?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
-
+# swoole-worker
 ## What is it
 此项目是workerman的swoole移植版本，移除了对pcntl,libevent,event扩展的依赖,转而使用swoole提供的swoole_process和Swoole_event，定时器采用swoole的swoole_timer
 ## Requires
