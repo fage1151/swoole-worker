@@ -7,13 +7,14 @@
 use \Workerman\Worker;
 use \Workerman\Lib\Timer;
 require_once 'vendor/autoload.php';
-$worker = new Worker('http://127.0.0.1:8090');
-$worker->onConnect = function($connect){
+$worker = new \Workerman\WebServer('http://127.0.0.1:8090');
+$worker->addRoot('127.0.0.1',__DIR__.'/web');
+/*$worker->onConnect = function($connect){
   $connect->send('sucess');
 };
 $worker->onMessage = function($connect,$data){
   $connect->send('123');
-};
+};*/
 
 $worker->onWorkerStart = function($worker){
     $timerid = Timer::add(2000,function()use(&$timerid){

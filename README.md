@@ -13,7 +13,7 @@ git clone https://git.oschina.net/FEIGE/swoole-worker.git
 ```
 
 ## Basic Usage
-
+用法与workerman兼容
 ### A websocket server 
 ```php
 <?php

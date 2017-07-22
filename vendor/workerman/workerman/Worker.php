@@ -1059,13 +1059,6 @@ class Worker
                 }
             }
         });
-/*        {
-                // If shutdown state and all child processes exited then master process exit.
-                if (self::$_status === self::STATUS_SHUTDOWN && !self::getAllWorkerPids()) {
-                    self::exitAndClearAll();
-                }
-            }*/
-
     }
 
     /**
