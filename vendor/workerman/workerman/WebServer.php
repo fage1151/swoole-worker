@@ -13,6 +13,7 @@
  */
 namespace Workerman;
 
+use Workerman\Connection\ConnectionInterface;
 use Workerman\Protocols\Http;
 use Workerman\Protocols\HttpCache;
 
@@ -228,6 +229,11 @@ class WebServer extends Worker
         }
     }
 
+    /**
+     * @param $connection
+     * @param $file_path
+     * @return mixed
+     */
     public static function sendFile($connection, $file_path)
     {
         // Check 304.

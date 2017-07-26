@@ -937,9 +937,9 @@ class Worker
 
     /**
      * Get worker id.
-     *
      * @param int $worker_id
      * @param int $pid
+     * @return mixed
      */
     protected static function getId($worker_id, $pid)
     {
