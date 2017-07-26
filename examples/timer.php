@@ -6,7 +6,7 @@
 
 use \Workerman\Worker;
 use \Workerman\Lib\Timer;
-require_once '../workerman/Autoloader.php';
+require_once '../Workerman/Autoloader.php';
 $worker = new Worker();
 
 
