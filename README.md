@@ -9,7 +9,7 @@ swoole_version >= 1.7.14
 ## Installation
 
 ```
-git clone https://git.oschina.net/FEIGE/swoole-worker.git
+composer require fage1151/swoole-worker
 ```
 
 ## Basic Usage
