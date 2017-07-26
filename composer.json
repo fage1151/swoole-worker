@@ -1,5 +1,5 @@
 {
-    "name": "fage1151/Swoole-worker",
+    "name": "fage1151/swoole-worker",
     "description": "Event-driven, Swoole for Workerman",
     "keywords": ["http"],
     "license": "Apache",
