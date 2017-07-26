@@ -23,6 +23,25 @@ $worker->onWorkerStart = function($worker){
 
 };
 $worker->count = 1;
+$worker = new   Worker('http://127.0.0.1:8091');
+$worker->onConnect = function($connect){
+/*    var_dump($_SERVER);
+  $connect->send('sucess');*/
+};
+$worker->onMessage = function(\Workerman\Connection\ConnectionInterface $connect,$data){
+    var_dump($_SERVER);
+
+     // $connect->send('123');
+};
+
+$worker->onWorkerStart = function($worker){
+    $timerid = Timer::add(2000,function()use(&$timerid){
+        echo $timerid.time()."\n";
+    },[1,2,3],false);
+
+};
+$worker->reusePort = true;
+$worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';
 Worker::$logFile = __DIR__.'/workerman.log';
 Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__ ). ".pid";

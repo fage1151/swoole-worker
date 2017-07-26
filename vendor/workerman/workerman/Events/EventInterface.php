@@ -77,12 +77,6 @@ interface EventInterface
      */
     public function del($fd, $flag);
 
-    /**
-     * Remove all timers.
-     *
-     * @return void
-     */
-    public function clearAllTimer();
 
     /**
      * Main loop.
