@@ -6,14 +6,14 @@
 
 use \Workerman\Worker;
 
-require_once '../vendor/autoload.php';
+require_once '../workerman/Autoloader.php';
 $worker->count = 1;
 $worker = new \Workerman\WebServer('http://0.0.0.0:8093');
 $worker->onWorkerStart = function (Worker $worker) {
 
 
 };
-$worker->addRoot('127.0.0.1','../'.__DIR__.'/web/');
+$worker->addRoot('127.0.0.1',__DIR__.'/web/');
 $worker->reusePort = true;
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';
