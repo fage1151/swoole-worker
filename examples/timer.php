@@ -5,15 +5,17 @@
  */
 
 use \Workerman\Worker;
-
+use \Workerman\Lib\Timer;
 require_once '../workerman/Autoloader.php';
-$worker = new \Workerman\WebServer('http://0.0.0.0:8093');
-$worker->onWorkerStart = function (Worker $worker) {
+$worker = new Worker();
 
+
+$worker->onWorkerStart = function (Worker $worker) {
+   $timerid = Timer::add(2000,function()use(&$timerid){
+        echo $timerid."\n";
+    },[1,2,3],true);
 
 };
-$worker->addRoot('127.0.0.1',__DIR__.'/web/');
-$worker->reusePort = true;
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';
 Worker::$logFile = __DIR__ . '/workerman.log';

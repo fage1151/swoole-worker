@@ -80,8 +80,6 @@ class Swoole_event implements EventInterface{
      */
     public function destroy()
     {
-        foreach ($this->_allEvents as $event) {
-            swoole_event_del($event);
-        }
+
     }
 }

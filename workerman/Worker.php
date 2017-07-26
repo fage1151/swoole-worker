@@ -425,9 +425,9 @@ class Worker
         self::parseCommand();
         self::daemonize();
         self::initWorkers();
-        self::installSignal();
         self::saveMasterPid();
         self::forkWorkers();
+        self::installSignal();
         self::displayUI();
         self::resetStd();
         self::monitorWorkers();
@@ -532,6 +532,7 @@ class Worker
             // Listen.
             if (!$worker->reusePort) {
                 $worker->listen();
+
             }
         }
     }
@@ -1395,6 +1396,7 @@ class Worker
      */
     public function listen()
     {
+
         if (!$this->_socketName || $this->_mainSocket) {
             return;
         }
@@ -1492,7 +1494,6 @@ class Worker
 
         // Set autoload root path.
         Autoloader::setRootPath($this->_autoloadRootPath);
-
         // Create a global event loop.
         if (!self::$globalEvent) {
             $event_loop_class = self::getEventLoopName();
@@ -1508,6 +1509,7 @@ class Worker
                 }
             }
         }
+
 
         // Reinstall signal.
         self::reinstallSignal();
@@ -1531,6 +1533,7 @@ class Worker
                 exit(250);
             }
         }
+
 
         // Main loop.
         self::$globalEvent->loop();

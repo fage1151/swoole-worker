@@ -6,8 +6,7 @@
 
 use \Workerman\Worker;
 
-require_once '../vendor/autoload.php';
-$worker->count = 1;
+require_once '../workerman/Autoloader.php';
 $worker = new Worker('websocket://127.0.0.1:8094');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
     $connect->send('connect success');

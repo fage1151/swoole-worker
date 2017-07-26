@@ -5,9 +5,8 @@
  */
 
 use \Workerman\Worker;
-
+use \Workerman\Lib\Timer;
 require_once '../workerman/Autoloader.php';
-$worker->count = 1;
 $worker = new Worker('tcp://127.0.0.1:8091');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
     $connect->send('connect success');
@@ -17,7 +16,9 @@ $worker->onMessage = function (\Workerman\Connection\ConnectionInterface $connec
 };
 
 $worker->onWorkerStart = function (Worker $worker) {
-
+    $timerid = Timer::add(2000,function()use(&$timerid){
+        echo $timerid."\n";
+    },[1,2,3],true);
 
 };
 $worker->reusePort = true;
