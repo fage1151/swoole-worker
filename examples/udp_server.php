@@ -6,7 +6,7 @@
 
 use \Workerman\Worker;
 
-require_once '../workerman/Autoloader.php';
+require_once '../Workerman/Autoloader.php';
 $worker = new Worker('udp://127.0.0.1:8092');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
     $connect->send('connect success');
