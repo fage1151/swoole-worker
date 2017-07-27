@@ -6,7 +6,7 @@
 
 use \Workerman\Worker;
 
-require_once '../Workerman/Autoloader.php';
+require_once '../Autoloader.php';
 $worker = new Worker('http://127.0.0.1:8093');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
     $connect->send('connect success');

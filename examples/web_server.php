@@ -6,7 +6,7 @@
 
 use \Workerman\Worker;
 
-require_once '../Workerman/Autoloader.php';
+require_once '../Autoloader.php';
 $worker = new \Workerman\WebServer('http://0.0.0.0:8093');
 $worker->onWorkerStart = function (Worker $worker) {
 

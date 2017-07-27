@@ -6,7 +6,7 @@
 
 use \Workerman\Worker;
 use \Workerman\Lib\Timer;
-require_once 'vendor/autoload.php';
+require_once '../Autoloader.php';
 $worker = new Worker('tcp://127.0.0.1:8091');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
     $connect->send('connect success');
