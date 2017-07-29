@@ -24,17 +24,17 @@ class Http
     public $request_method = '';
     public $onResponse = null;
     public $onError = null;
-    public function __construct($url,$request_method='get',$data=[],$headers=[],$cookies=[])
+    public function __construct($url,$method='get',$data=[],$headers=[],$cookies=[])
     {
         $this->parse_url_to_array($url);
         $available_methods = ['post','get'];
-        if(!in_array($request_method,$available_methods)){
+        if(!in_array($method,$available_methods)){
             throw new \Exception('request method is inavailable');
         }
         $this->request_headers = $headers;
         $this->request_data = $data;
         $this->request_cookies = $cookies;
-        $this->request_method = $request_method;
+        $this->request_method = $method;
 
     }
     public function parse_url_to_array($url)
