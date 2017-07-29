@@ -11,12 +11,12 @@ require_once '../Autoloader.php';
 $worker = new Worker();
 
 $worker->onWorkerStart = function (Worker $worker) {
-    $url = 'http://www.sohu.com';
-    $request_method = 'post';
+    $url = 'http://www.workerman.net';
+    $request_method = 'get';
     $data = ['uid'=>1];
     $http = new Http($url, $request_method,$data);
     $http->onResponse = function ($cli) {
-        var_dump($cli);
+        var_dump($cli->body);
     };
     $http->request();
 };

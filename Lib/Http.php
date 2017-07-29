@@ -71,8 +71,4 @@ class Http
             }
         });
     }
-    public function onMessage($cli)
-    {
-        call_user_func_array($this->onResponse,[$cli]);
-    }
 }
