@@ -9,23 +9,22 @@
 namespace Workerman\Lib;
 
 
-class Tcp
+class Ws
 {
     public $parse_host;
     public $parse_port;
     public $client;
+    public $onMessage = null;
     public $onConnect = null;
     public $onClose = null;
-    public $onReceive = null;
-    public $onError = null;
+    public $upgrade = null;
 
     public function __construct($host)
     {
-        $this->client = $client = new \Swoole\Client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
-        $this->onConnect = function(){};
-        $this->onError = function(){};
-        $this->onReceive = function(){};
+        $this->onMessage = function(){};
+        $this->upgrade = function(){};
         $this->onClose = function(){};
+        $this->onConnect = function(){};
         $this->parse_url_to_array($host);
     }
 
@@ -40,12 +39,11 @@ class Tcp
 
     public function connect()
     {
+        $this->client = $client = new \Swoole\Http\Client($this->parse_host, $this->parse_port);
         //设置事件回调函数
+        $this->client->on("message", $this->onMessage);
         $this->client->on("connect", $this->onConnect);
-        $this->client->on("receive", $this->onReceive);
-        $this->client->on("error", $this->onError);
         $this->client->on("close", $this->onClose);
-        //发起网络连接
-        $this->client->connect($this->parse_host, $this->parse_port, 0.5);
+        $this->client->upgrade('/', $this->upgrade);
     }
 }
