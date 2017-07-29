@@ -11,11 +11,14 @@ $worker = new Worker();
 
 $worker->onWorkerStart = function (Worker $worker) {
     $url = 'www.workerman.net:80';
-    $http = new Tcp($url);
-    $http->onResponse = function ($cli) {
-        var_dump($cli->body);
+    $tcp = new Tcp($url);
+    $tcp->onConnecct = function ($client) {
+        $client->send('123');
     };
-    $http->connect();
+    $tcp->onReceive = function ($client,$data) {
+        var_dump($data);
+    };
+    $tcp->connect();
 };
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';

@@ -22,6 +22,10 @@ class Tcp
     public function __construct($host)
     {
         $this->client = $client = new \Swoole\Client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
+        $this->onConnecct = function(){};
+        $this->onError = function(){};
+        $this->onReceive = function(){};
+        $this->onClose = function(){};
         $this->parse_url_to_array($host);
     }
 
