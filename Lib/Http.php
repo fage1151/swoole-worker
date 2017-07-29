@@ -34,6 +34,8 @@ class Http
         $this->request_headers = $headers;
         $this->request_cookies = $cookies;
         $this->request_method = $method;
+        $this->onError = function(){};
+        $this->onResponse = function(){};
 
     }
     public function parse_url_to_array($url)
