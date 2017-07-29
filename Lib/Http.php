@@ -24,7 +24,7 @@ class Http
     public $request_method = '';
     public $onResponse = null;
     public $onError = null;
-    public function __construct($url,$method='get',$data=[],$headers=[],$cookies=[])
+    public function __construct($url,$method='get',$headers=[],$cookies=[])
     {
         $this->parse_url_to_array($url);
         $available_methods = ['post','get'];
@@ -32,7 +32,6 @@ class Http
             throw new \Exception('request method is inavailable');
         }
         $this->request_headers = $headers;
-        $this->request_data = $data;
         $this->request_cookies = $cookies;
         $this->request_method = $method;
 
@@ -49,8 +48,9 @@ class Http
 
     }
 
-    public function request()
+    public function request($data=[])
     {
+        $this->request_data = $data;
         swoole_async_dns_lookup($this->parse_host, function($host, $ip){
             if($ip == ''){
                 call_user_func_array($this->onError,[$host]);

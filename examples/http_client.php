@@ -14,11 +14,11 @@ $worker->onWorkerStart = function (Worker $worker) {
     $url = 'http://www.workerman.net';
     $request_method = 'get';
     $data = ['uid'=>1];
-    $http = new Http($url, $request_method,$data);
+    $http = new Http($url, $request_method);
     $http->onResponse = function ($cli) {
         var_dump($cli->body);
     };
-    $http->request();
+    $http->request($data);
 };
 $worker->count = 1;
 Worker::$stdoutFile = '/tmp/oauth.log';
