@@ -6,7 +6,7 @@
  * Time: 下午8:26
  */
 
-namespace Workerman\Lib;
+namespace Workerman\Clients;
 
 
 class Http

@@ -6,7 +6,7 @@
  * Time: 下午3:16
  */
 
-namespace Workerman\Lib;
+namespace Workerman\Clients;
 
 
 class Ws

@@ -5,7 +5,7 @@
  */
 
 use \Workerman\Worker;
-use \Workerman\Lib\Tcp;
+use \Workerman\Clients\Tcp;
 require_once '../Autoloader.php';
 $worker = new Worker();
 

@@ -5,7 +5,7 @@
  */
 
 use \Workerman\Worker;
-use \Workerman\Lib\Http;
+use \Workerman\Clients\Http;
 
 require_once '../Autoloader.php';
 $worker = new Worker();
