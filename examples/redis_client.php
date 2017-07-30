@@ -9,6 +9,10 @@ $worker->onWorkerStart = function () {
     $client->connect('127.0.0.1', 6379, function (Redis $client, $result) {
         echo "connect\n";
         var_dump($result);
+        $db = 0;
+        $client->select($db);
+        $password = '111111';
+        $client->auth($password);
     });
 };
 $worker->onMessage = function ($connection, $data) {
