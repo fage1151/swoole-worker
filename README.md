@@ -268,6 +268,7 @@ $worker->onWorkerStart = function()
 Worker::runAll();
 ```
 ### Async Tcp Client
+```
     <?php
     /**
      * run with command
@@ -326,6 +327,7 @@ Worker::runAll();
     Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
     // 运行所有服务
     Worker::runAll();
+    ```
 ### Async Mysql of ReactPHP
 ```
 composer require react/mysql
