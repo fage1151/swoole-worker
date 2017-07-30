@@ -1,4 +1,7 @@
 <?php
+/**
+ * 编译swoole时，在configure指令中加入--enable-async-redis
+ */
 require_once '../Autoloader.php';
 use Workerman\Worker;
 use \Swoole\Redis;

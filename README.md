@@ -432,7 +432,7 @@ Worker::runAll();
 ```
 编译swoole时，在configure指令中加入--enable-async-redis
 ```
-document https://wiki.swoole.com/wiki/page/p-redis.html
+Document https://wiki.swoole.com/wiki/page/p-redis.html
 ```php
 <?php
 require_once '../Autoloader.php';
