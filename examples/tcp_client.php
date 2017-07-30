@@ -6,16 +6,17 @@
 
 use \Workerman\Worker;
 use \Workerman\Clients\Tcp;
+use \Swoole\Client;
 require_once '../Autoloader.php';
 $worker = new Worker();
 
 $worker->onWorkerStart = function (Worker $worker) {
     $url = 'www.workerman.net:80';
     $tcp = new Tcp($url);
-    $tcp->onConnect = function ($client) {
+    $tcp->onConnect = function (Client $client) {
         $client->send('123');
     };
-    $tcp->onReceive = function ($client,$data) {
+    $tcp->onReceive = function (Client $client,$data) {
         var_dump($data);
     };
     $tcp->connect();

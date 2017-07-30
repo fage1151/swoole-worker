@@ -5,13 +5,13 @@
  */
 
 use \Workerman\Worker;
-
+use \Workerman\Connection\ConnectionInterface;
 require_once '../Autoloader.php';
 $worker = new Worker('udp://127.0.0.1:8092');
-$worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
+$worker->onConnect = function (ConnectionInterface $connect) {
     $connect->send('connect success');
 };
-$worker->onMessage = function (\Workerman\Connection\ConnectionInterface $connect, $data) {
+$worker->onMessage = function (ConnectionInterface $connect, $data) {
     $connect->send($data);
 };
 
