@@ -337,7 +337,7 @@ Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
 // 运行所有服务
 Worker::runAll();
 ```
-### Aysnc Dns 
+### Aysnc Dns Client
 ```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -355,7 +355,7 @@ $worker->onMessage = function($connection, $host) {
 Worker::runAll();
 ```
 
-### Async Http client
+### Async Http Client
 ```php
 <?php
 /**
