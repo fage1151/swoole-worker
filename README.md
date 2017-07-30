@@ -337,6 +337,61 @@ Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
 // 运行所有服务
 Worker::runAll();
 ```
+### Aysnc Dns 
+```php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+use Workerman\Worker;
+$worker = new Worker('tcp://0.0.0.0:6161');
+$worker->onWorkerStart = function() {
+   swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
+       echo "{$host} : {$ip}\n";
+   });
+};
+$worker->onMessage = function($connection, $host) {
+    global $dns;
+    $host = trim($host);
+    $dns->resolve($host)->then(function($ip) use($host, $connection) {
+        $connection->send("$host: $ip");
+    },function($e) use($host, $connection){
+        $connection->send("$host: {$e->getMessage()}");
+    });
+};
+
+Worker::runAll();
+```
+
+### Async Http client
+```php
+<?php
+/**
+ * run with command
+ * php start.php start
+ */
+
+use \Workerman\Worker;
+use \Workerman\Clients\Http;
+
+require_once '../Autoloader.php';
+$worker = new Worker();
+
+$worker->onWorkerStart = function (Worker $worker) {
+    $url = 'http://www.workerman.net';
+    $request_method = 'get';
+    $data = ['uid'=>1];
+    $http = new Http($url, $request_method);
+    $http->onResponse = function ($cli) {
+        var_dump($cli->body);
+    };
+    $http->request($data);
+};
+$worker->count = 1;
+Worker::$stdoutFile = '/tmp/oauth.log';
+Worker::$logFile = __DIR__ . '/workerman.log';
+Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+// 运行所有服务
+Worker::runAll();
+```
 ### Async Mysql of ReactPHP
 ```
 composer require react/mysql
@@ -420,103 +475,6 @@ $worker->onMessage = function($connection, $data) {
             $connection->send($n);
         });
     });
-};
-
-Worker::runAll();
-```
-
-### Aysnc Dns 
-```php
-<?php
-swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
-    echo "{$host} : {$ip}\n";
-});
-```
-
-```
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Workerman\Worker;
-$worker = new Worker('tcp://0.0.0.0:6161');
-$worker->onWorkerStart = function() {
-    global   $dns;
-    // Get event-loop.
-    $loop    = Worker::getEventLoop();
-    $factory = new React\Dns\Resolver\Factory();
-    $dns     = $factory->create('8.8.8.8', $loop);
-};
-$worker->onMessage = function($connection, $host) {
-    global $dns;
-    $host = trim($host);
-    $dns->resolve($host)->then(function($ip) use($host, $connection) {
-        $connection->send("$host: $ip");
-    },function($e) use($host, $connection){
-        $connection->send("$host: {$e->getMessage()}");
-    });
-};
-
-Worker::runAll();
-```
-
-### Http client
-```php
-<?php
-/**
- * run with command
- * php start.php start
- */
-
-use \Workerman\Worker;
-use \Workerman\Clients\Http;
-
-require_once '../Autoloader.php';
-$worker = new Worker();
-
-$worker->onWorkerStart = function (Worker $worker) {
-    $url = 'http://www.workerman.net';
-    $request_method = 'get';
-    $data = ['uid'=>1];
-    $http = new Http($url, $request_method);
-    $http->onResponse = function ($cli) {
-        var_dump($cli->body);
-    };
-    $http->request($data);
-};
-$worker->count = 1;
-Worker::$stdoutFile = '/tmp/oauth.log';
-Worker::$logFile = __DIR__ . '/workerman.log';
-Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
-// 运行所有服务
-Worker::runAll();
-```
-```php
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Workerman\Worker;
-
-$worker = new Worker('tcp://0.0.0.0:6161');
-
-$worker->onWorkerStart = function() {
-    global   $client;
-    $loop    = Worker::getEventLoop();
-    $factory = new React\Dns\Resolver\Factory();
-    $dns     = $factory->createCached('8.8.8.8', $loop);
-    $factory = new React\HttpClient\Factory();
-    $client = $factory->create($loop, $dns);
-};
-
-$worker->onMessage = function($connection, $host) {
-    global     $client;
-    $request = $client->request('GET', trim($host));
-    $request->on('error', function(Exception $e) use ($connection) {
-        $connection->send($e);
-    });
-    $request->on('response', function ($response) use ($connection) {
-        $response->on('data', function ($data, $response) use ($connection) {
-            $connection->send($data);
-        });
-    });
-    $request->end();
 };
 
 Worker::runAll();
