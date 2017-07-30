@@ -50,7 +50,7 @@ Worker::runAll();
 ```
 
 ### An http server
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -75,7 +75,7 @@ Worker::runAll();
 ```
 
 ### A WebServer
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\WebServer;
@@ -95,7 +95,7 @@ Worker::runAll();
 ```
 
 ### A tcp server
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -129,7 +129,7 @@ Worker::runAll();
 ```
 
 ### Enable SSL.
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -160,7 +160,7 @@ Worker::runAll();
 
 ### Custom protocol
 Protocols/MyTextProtocol.php
-```
+```php
 <?php
 namespace Protocols;
 /**
@@ -194,7 +194,7 @@ class MyTextProtocol
 }
 ```
 
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -223,7 +223,7 @@ Worker::runAll();
 ```
 
 ### Timer
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -247,7 +247,7 @@ Worker::runAll();
 ```
 
 ### AsyncTcpConnection (tcp/ws/text/frame etc...)
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -275,7 +275,7 @@ $worker->onWorkerStart = function()
 Worker::runAll();
 ```
 ### Async Tcp Client
-```
+```php
 <?php
 /**
  * run with command
@@ -306,7 +306,7 @@ Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
 Worker::runAll();
 ```
 ### Async WebSocket Client
-```
+```php
 <?php
 /**
  * run with command
@@ -342,7 +342,7 @@ Worker::runAll();
 composer require react/mysql
 ```
 
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -388,7 +388,7 @@ Worker::runAll();
 composer require clue/redis-react
 ```
 
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Clue\React\Redis\Factory;
@@ -425,8 +425,8 @@ $worker->onMessage = function($connection, $data) {
 Worker::runAll();
 ```
 
-### Aysnc dns 
-```
+### Aysnc Dns 
+```php
 <?php
 swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
     echo "{$host} : {$ip}\n";
@@ -459,7 +459,7 @@ Worker::runAll();
 ```
 
 ### Http client
-```
+```php
 <?php
 /**
  * run with command
@@ -489,7 +489,7 @@ Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
 // 运行所有服务
 Worker::runAll();
 ```
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -527,7 +527,7 @@ Worker::runAll();
 composer require react/zmq
 ```
 
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -558,7 +558,7 @@ Worker::runAll();
 composer require react/stomp
 ```
 
-```
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
