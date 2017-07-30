@@ -15,7 +15,8 @@ composer require fage1151/swoole-worker
 ## Basic Usage
 用法与workerman兼容,第三方组件可能存在不兼容的情况
 ### A websocket server 
-```php
+```
+<?php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -50,7 +51,8 @@ Worker::runAll();
 ```
 
 ### An http server
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 
@@ -74,7 +76,8 @@ Worker::runAll();
 ```
 
 ### A WebServer
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\WebServer;
 use Workerman\Worker;
@@ -93,7 +96,8 @@ Worker::runAll();
 ```
 
 ### A tcp server
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 
@@ -126,7 +130,7 @@ Worker::runAll();
 ```
 
 ### Enable SSL.
-```php
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -157,7 +161,8 @@ Worker::runAll();
 
 ### Custom protocol
 Protocols/MyTextProtocol.php
-```php
+```
+<?php
 namespace Protocols;
 /**
  * User defined protocol
@@ -190,7 +195,8 @@ class MyTextProtocol
 }
 ```
 
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 
@@ -218,7 +224,8 @@ Worker::runAll();
 ```
 
 ### Timer
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 use Workerman\Lib\Timer;
@@ -241,7 +248,8 @@ Worker::runAll();
 ```
 
 ### AsyncTcpConnection (tcp/ws/text/frame etc...)
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 use Workerman\Connection\AsyncTcpConnection;
@@ -269,73 +277,73 @@ Worker::runAll();
 ```
 ### Async Tcp Client
 ```
-    <?php
-    /**
-     * run with command
-     * php start.php start
-     */
-    
-    use \Workerman\Worker;
-    use \Workerman\Clients\Tcp;
-    require_once '../Autoloader.php';
-    $worker = new Worker();
-    
-    $worker->onWorkerStart = function (Worker $worker) {
-        $url = 'www.workerman.net:80';
-        $tcp = new Tcp($url);
-        $tcp->onConnect = function ($client) {
-            $client->send('123');
-        };
-        $tcp->onReceive = function ($client,$data) {
-            var_dump($data);
-        };
-        $tcp->connect();
+<?php
+/**
+ * run with command
+ * php start.php start
+ */
+
+use \Workerman\Worker;
+use \Workerman\Clients\Tcp;
+require_once '../Autoloader.php';
+$worker = new Worker();
+
+$worker->onWorkerStart = function (Worker $worker) {
+    $url = 'www.workerman.net:80';
+    $tcp = new Tcp($url);
+    $tcp->onConnect = function ($client) {
+        $client->send('123');
     };
-    $worker->count = 1;
-    Worker::$stdoutFile = '/tmp/oauth.log';
-    Worker::$logFile = __DIR__ . '/workerman.log';
-    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
-    // 运行所有服务
-    Worker::runAll();
-    ```
+    $tcp->onReceive = function ($client,$data) {
+        var_dump($data);
+    };
+    $tcp->connect();
+};
+$worker->count = 1;
+Worker::$stdoutFile = '/tmp/oauth.log';
+Worker::$logFile = __DIR__ . '/workerman.log';
+Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+// 运行所有服务
+Worker::runAll();
+```
 ### Async WebSocket Client
 ```
-    <?php
-    /**
-     * run with command
-     * php start.php start
-     */
-    
-    use \Workerman\Worker;
-    use \Workerman\Clients\Ws;
-    require_once '../Autoloader.php';
-    $worker = new Worker();
-    
-    $worker->onWorkerStart = function (Worker $worker) {
-        $url = 'laychat.workerman.net:9292';
-        $tcp = new Ws($url);
-        $tcp->onConnect = function (\Swoole\Http\Client $client) {
-            var_dump($client);
-        };
-        $tcp->onMessage = function (\Swoole\Http\Client $client,$data) {
-            $client->push('{"type":"ping"}');
-            var_dump($data);
-        };
-        $tcp->connect();
+<?php
+/**
+ * run with command
+ * php start.php start
+ */
+
+use \Workerman\Worker;
+use \Workerman\Clients\Ws;
+require_once '../Autoloader.php';
+$worker = new Worker();
+
+$worker->onWorkerStart = function (Worker $worker) {
+    $url = 'laychat.workerman.net:9292';
+    $tcp = new Ws($url);
+    $tcp->onConnect = function (\Swoole\Http\Client $client) {
+        var_dump($client);
     };
-    $worker->count = 1;
-    Worker::$stdoutFile = '/tmp/oauth.log';
-    Worker::$logFile = __DIR__ . '/workerman.log';
-    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
-    // 运行所有服务
-    Worker::runAll();
-    ```
+    $tcp->onMessage = function (\Swoole\Http\Client $client,$data) {
+        $client->push('{"type":"ping"}');
+        var_dump($data);
+    };
+    $tcp->connect();
+};
+$worker->count = 1;
+Worker::$stdoutFile = '/tmp/oauth.log';
+Worker::$logFile = __DIR__ . '/workerman.log';
+Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+// 运行所有服务
+Worker::runAll();
+```
 ### Async Mysql of ReactPHP
 ```
 composer require react/mysql
 ```
 
-```php
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -381,7 +389,7 @@ Worker::runAll();
 composer require clue/redis-react
 ```
 
-```php
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Clue\React\Redis\Factory;
@@ -419,13 +427,15 @@ Worker::runAll();
 ```
 
 ### Aysnc dns 
-    <?php
-    swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
-        echo "{$host} : {$ip}\n";
-    });
+```
+<?php
+swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
+    echo "{$host} : {$ip}\n";
+});
+```
 
-
-```php
+```
+<?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
 $worker = new Worker('tcp://0.0.0.0:6161');
@@ -450,36 +460,37 @@ Worker::runAll();
 ```
 
 ### Http client
-    <?php
-    /**
-     * run with command
-     * php start.php start
-     */
-    
-    use \Workerman\Worker;
-    use \Workerman\Clients\Http;
-    
-    require_once '../Autoloader.php';
-    $worker = new Worker();
-    
-    $worker->onWorkerStart = function (Worker $worker) {
-        $url = 'http://www.workerman.net';
-        $request_method = 'get';
-        $data = ['uid'=>1];
-        $http = new Http($url, $request_method);
-        $http->onResponse = function ($cli) {
-            var_dump($cli->body);
-        };
-        $http->request($data);
-    };
-    $worker->count = 1;
-    Worker::$stdoutFile = '/tmp/oauth.log';
-    Worker::$logFile = __DIR__ . '/workerman.log';
-    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
-    // 运行所有服务
-    Worker::runAll();
+```
+<?php
+/**
+ * run with command
+ * php start.php start
+ */
 
-```php
+use \Workerman\Worker;
+use \Workerman\Clients\Http;
+
+require_once '../Autoloader.php';
+$worker = new Worker();
+
+$worker->onWorkerStart = function (Worker $worker) {
+    $url = 'http://www.workerman.net';
+    $request_method = 'get';
+    $data = ['uid'=>1];
+    $http = new Http($url, $request_method);
+    $http->onResponse = function ($cli) {
+        var_dump($cli->body);
+    };
+    $http->request($data);
+};
+$worker->count = 1;
+Worker::$stdoutFile = '/tmp/oauth.log';
+Worker::$logFile = __DIR__ . '/workerman.log';
+Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+// 运行所有服务
+Worker::runAll();
+```
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -517,7 +528,7 @@ Worker::runAll();
 composer require react/zmq
 ```
 
-```php
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
@@ -548,7 +559,7 @@ Worker::runAll();
 composer require react/stomp
 ```
 
-```php
+```
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
