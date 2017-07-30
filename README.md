@@ -15,8 +15,7 @@ composer require fage1151/swoole-worker
 ## Basic Usage
 用法与workerman兼容,第三方组件可能存在不兼容的情况
 ### A websocket server 
-```
-<?php
+```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 use Workerman\Worker;
