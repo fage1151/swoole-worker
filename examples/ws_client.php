@@ -6,16 +6,17 @@
 
 use \Workerman\Worker;
 use \Workerman\Clients\Ws;
+use \Swoole\Http\Client;
 require_once '../Autoloader.php';
 $worker = new Worker();
 
 $worker->onWorkerStart = function (Worker $worker) {
     $url = 'laychat.workerman.net:9292';
     $tcp = new Ws($url);
-    $tcp->onConnect = function (\Swoole\Http\Client $client) {
+    $tcp->onConnect = function (Client $client) {
         var_dump($client);
     };
-    $tcp->onMessage = function (\Swoole\Http\Client $client,$data) {
+    $tcp->onMessage = function (Client $client,$data) {
         $client->push('{"type":"ping"}');
         var_dump($data);
     };

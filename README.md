@@ -524,8 +524,9 @@ $worker->onWorkerStart = function() {
 
 Worker::runAll();
 ```
-
-
+### Document
+IDE自动提示工具 swoole-ide-helper：https://github.com/eaglewu/swoole-ide-helper  
+Swoole官方网站　https://wiki.swoole.com/wiki/index/prid-1
 
 ## Available commands
 ```php test.php start  ```  
