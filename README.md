@@ -267,7 +267,65 @@ $worker->onWorkerStart = function()
 };
 Worker::runAll();
 ```
-
+### Async Tcp Client
+    <?php
+    /**
+     * run with command
+     * php start.php start
+     */
+    
+    use \Workerman\Worker;
+    use \Workerman\Clients\Tcp;
+    require_once '../Autoloader.php';
+    $worker = new Worker();
+    
+    $worker->onWorkerStart = function (Worker $worker) {
+        $url = 'www.workerman.net:80';
+        $tcp = new Tcp($url);
+        $tcp->onConnect = function ($client) {
+            $client->send('123');
+        };
+        $tcp->onReceive = function ($client,$data) {
+            var_dump($data);
+        };
+        $tcp->connect();
+    };
+    $worker->count = 1;
+    Worker::$stdoutFile = '/tmp/oauth.log';
+    Worker::$logFile = __DIR__ . '/workerman.log';
+    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+    // 运行所有服务
+    Worker::runAll();
+### Async WebSocket Client
+    <?php
+    /**
+     * run with command
+     * php start.php start
+     */
+    
+    use \Workerman\Worker;
+    use \Workerman\Clients\Ws;
+    require_once '../Autoloader.php';
+    $worker = new Worker();
+    
+    $worker->onWorkerStart = function (Worker $worker) {
+        $url = 'laychat.workerman.net:9292';
+        $tcp = new Ws($url);
+        $tcp->onConnect = function (\Swoole\Http\Client $client) {
+            var_dump($client);
+        };
+        $tcp->onMessage = function (\Swoole\Http\Client $client,$data) {
+            $client->push('{"type":"ping"}');
+            var_dump($data);
+        };
+        $tcp->connect();
+    };
+    $worker->count = 1;
+    Worker::$stdoutFile = '/tmp/oauth.log';
+    Worker::$logFile = __DIR__ . '/workerman.log';
+    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+    // 运行所有服务
+    Worker::runAll();
 ### Async Mysql of ReactPHP
 ```
 composer require react/mysql
@@ -356,10 +414,12 @@ $worker->onMessage = function($connection, $data) {
 Worker::runAll();
 ```
 
-### Aysnc dns of ReactPHP
-```
-composer require react/dns
-```
+### Aysnc dns 
+    <?php
+    swoole_async_dns_lookup("www.baidu.com", function($host, $ip){
+        echo "{$host} : {$ip}\n";
+    });
+
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -385,10 +445,35 @@ $worker->onMessage = function($connection, $host) {
 Worker::runAll();
 ```
 
-### Http client of ReactPHP
-```
-composer require react/http-client
-```
+### Http client
+    <?php
+    /**
+     * run with command
+     * php start.php start
+     */
+    
+    use \Workerman\Worker;
+    use \Workerman\Clients\Http;
+    
+    require_once '../Autoloader.php';
+    $worker = new Worker();
+    
+    $worker->onWorkerStart = function (Worker $worker) {
+        $url = 'http://www.workerman.net';
+        $request_method = 'get';
+        $data = ['uid'=>1];
+        $http = new Http($url, $request_method);
+        $http->onResponse = function ($cli) {
+            var_dump($cli->body);
+        };
+        $http->request($data);
+    };
+    $worker->count = 1;
+    Worker::$stdoutFile = '/tmp/oauth.log';
+    Worker::$logFile = __DIR__ . '/workerman.log';
+    Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
+    // 运行所有服务
+    Worker::runAll();
 
 ```php
 <?php
