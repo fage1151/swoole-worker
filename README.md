@@ -349,13 +349,7 @@ $worker->onWorkerStart = function() {
    });
 };
 $worker->onMessage = function($connection, $host) {
-    global $dns;
-    $host = trim($host);
-    $dns->resolve($host)->then(function($ip) use($host, $connection) {
-        $connection->send("$host: $ip");
-    },function($e) use($host, $connection){
-        $connection->send("$host: {$e->getMessage()}");
-    });
+
 };
 
 Worker::runAll();
