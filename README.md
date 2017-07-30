@@ -386,91 +386,73 @@ Worker::$pidFile = __DIR__ . "/" . str_replace('/', '_', __FILE__) . ".pid";
 // 运行所有服务
 Worker::runAll();
 ```
-### Async Mysql of ReactPHP
-```
-composer require react/mysql
-```
-
+### Async Mysql Client
 ```php
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once '../Autoloader.php';
 use Workerman\Worker;
-
+use \Swoole\Mysql;
 $worker = new Worker('tcp://0.0.0.0:6161');
-$worker->onWorkerStart = function() {
+$worker->onWorkerStart = function () {
     global $mysql;
-    $loop  = Worker::getEventLoop();
-    $mysql = new React\MySQL\Connection($loop, array(
-        'host'   => '127.0.0.1',
-        'dbname' => 'dbname',
-        'user'   => 'user',
-        'passwd' => 'passwd',
-    ));
-    $mysql->on('error', function($e){
-        echo $e;
-    });
-    $mysql->connect(function ($e) {
-        if($e) {
-            echo $e;
-        } else {
-            echo "connect success\n";
+    $mysql = new Mysql;
+    $server = array(
+        'host' => '192.168.56.102',
+        'port' => 3306,
+        'user' => 'test',
+        'password' => 'test',
+        'database' => 'test',
+        'charset' => 'utf8', //指定字符集
+        'timeout' => 2,  // 可选：连接超时时间（非查询超时时间），默认为SW_MYSQL_CONNECT_TIMEOUT（1.0）
+    );
+
+    $mysql->connect($server, function (Mysql $db, $r) {
+        if ($r === false) {
+            var_dump($db->connect_errno, $db->connect_error);
+            die;
         }
     });
 };
-$worker->onMessage = function($connection, $data) {
+$worker->onMessage = function ($connection, $data) {
     global $mysql;
-    $mysql->query('show databases' /*trim($data)*/, function ($command, $mysql) use ($connection) {
-        if ($command->hasError()) {
-            $error = $command->getError();
-        } else {
-            $results = $command->resultRows;
-            $fields  = $command->resultFields;
-            $connection->send(json_encode($results));
+    $sql = 'show tables';
+    $mysql->query($sql, function (Mysql $db, $r) {
+        if ($r === false) {
+            var_dump($db->error, $db->errno);
+        } elseif ($r === true) {
+            var_dump($db->affected_rows, $db->insert_id);
         }
+        var_dump($r);
     });
 };
 Worker::runAll();
 ```
 
-### Async Redis of ReactPHP
-```
-composer require clue/redis-react
-```
-
+### Async Redis Client
 ```php
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Clue\React\Redis\Factory;
-use Clue\React\Redis\Client;
+require_once '../Autoloader.php';
 use Workerman\Worker;
-
+use \Swoole\Redis;
 $worker = new Worker('tcp://0.0.0.0:6161');
-
-$worker->onWorkerStart = function() {
-    global $factory;
-    $loop    = Worker::getEventLoop();
-    $factory = new Factory($loop);
+$worker->onWorkerStart = function () {
+    global $client;
+    $client = new Redis;
+    $client->connect('127.0.0.1', 6379, function (Redis $client, $result) {
+        echo "connect\n";
+        var_dump($result);
+    });
 };
-
-$worker->onMessage = function($connection, $data) {
-    global $factory;
-    $factory->createClient('localhost:6379')->then(function (Client $client) use ($connection) {
-        $client->set('greeting', 'Hello world');
-        $client->append('greeting', '!');
-
-        $client->get('greeting')->then(function ($greeting) use ($connection){
-            // Hello world!
-            echo $greeting . PHP_EOL;
-            $connection->send($greeting);
-        });
-
-        $client->incr('invocation')->then(function ($n) use ($connection){
-            echo 'This is invocation #' . $n . PHP_EOL;
-            $connection->send($n);
+$worker->onMessage = function ($connection, $data) {
+    global $client;
+    $client->set('key', 'swoole', function (Redis $client, $result) {
+        var_dump($result);
+        $client->get('key', function (Redis $client, $result) {
+            var_dump($result);
+            $client->close();
         });
     });
 };
-
 Worker::runAll();
 ```
 
