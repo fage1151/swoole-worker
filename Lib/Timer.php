@@ -14,7 +14,6 @@
 namespace Workerman\Lib;
 
 use Exception;
-use \swoole_process;
 
 
 /**
