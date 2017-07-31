@@ -357,6 +357,7 @@ Worker::runAll();
 ```
 
 ### Async Http Client
+    https网站需要依赖openssl，必须在编译swoole时启用--enable-openssl
 ```php
 <?php
 /**
