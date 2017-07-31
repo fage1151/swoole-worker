@@ -234,7 +234,7 @@ class WebServer extends Worker
      * @param $file_path
      * @return mixed
      */
-    public static function sendFile($connection, $file_path)
+    public static function sendFile(ConnectionInterface $connection, $file_path)
     {
         // Check 304.
         $info = stat($file_path);
