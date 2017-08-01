@@ -1177,7 +1177,7 @@ class Worker
             file_put_contents(self::$_statisticsFile,
                 "---------------------------------------GLOBAL STATUS--------------------------------------------\n");
             file_put_contents(self::$_statisticsFile,
-                'Workerman version:' . Worker::VERSION . "          PHP version:" . PHP_VERSION . "\n", FILE_APPEND);
+                'Swoole version:' . phpversion('swoole') . "          PHP version:" . PHP_VERSION . "\n", FILE_APPEND);
             file_put_contents(self::$_statisticsFile, 'start time:' . date('Y-m-d H:i:s',
                     self::$_globalStatistics['start_timestamp']) . '   run ' . floor((time() - self::$_globalStatistics['start_timestamp']) / (24 * 60 * 60)) . ' days ' . floor(((time() - self::$_globalStatistics['start_timestamp']) % (24 * 60 * 60)) / (60 * 60)) . " hours   \n",
                 FILE_APPEND);
