@@ -466,66 +466,6 @@ $worker->onMessage = function ($connection, $data) {
 Worker::runAll();
 ```
 
-### ZMQ of ReactPHP
-```
-composer require react/zmq
-```
-
-```php
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Workerman\Worker;
-
-$worker = new Worker('text://0.0.0.0:6161');
-
-$worker->onWorkerStart = function() {
-    global   $pull;
-    $loop    = Worker::getEventLoop();
-    $context = new React\ZMQ\Context($loop);
-    $pull    = $context->getSocket(ZMQ::SOCKET_PULL);
-    $pull->bind('tcp://127.0.0.1:5555');
-
-    $pull->on('error', function ($e) {
-        var_dump($e->getMessage());
-    });
-
-    $pull->on('message', function ($msg) {
-        echo "Received: $msg\n";
-    });
-};
-
-Worker::runAll();
-```
-
-### STOMP of ReactPHP
-```
-composer require react/stomp
-```
-
-```php
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-use Workerman\Worker;
-
-$worker = new Worker('text://0.0.0.0:6161');
-
-$worker->onWorkerStart = function() {
-    global   $client;
-    $loop    = Worker::getEventLoop();
-    $factory = new React\Stomp\Factory($loop);
-    $client  = $factory->createClient(array('vhost' => '/', 'login' => 'guest', 'passcode' => 'guest'));
-
-    $client
-        ->connect()
-        ->then(function ($client) use ($loop) {
-            $client->subscribe('/topic/foo', function ($frame) {
-                echo "Message received: {$frame->body}\n";
-            });
-        });
-};
-
-Worker::runAll();
-```
 ### Document
 IDE自动提示工具 swoole-ide-helper：https://github.com/eaglewu/swoole-ide-helper  
 Swoole官方网站　https://wiki.swoole.com/wiki/index/prid-1
