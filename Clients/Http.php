@@ -24,6 +24,7 @@ class Http
     public $request_method = '';
     public $onResponse = null;
     public $onError = null;
+    public $ssl = false;
     public function __construct($url,$method='get',$headers=[],$cookies=[])
     {
         $this->parse_url_to_array($url);
@@ -62,7 +63,7 @@ class Http
             if($this->parse_scheme === 'https'){
                 $this->ssl = true;
             };
-            $this->client = new \Swoole\Http\Client($this->real_ip, $this->parse_port,false);
+            $this->client = new \Swoole\Http\Client($this->real_ip, $this->parse_port,$this->ssl);
             $this->client->setHeaders($this->request_headers);
             $this->client->setCookies($this->request_cookies);
             $request_method = $this->request_method;
