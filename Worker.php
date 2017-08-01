@@ -425,9 +425,9 @@ class Worker
         self::parseCommand();
         self::daemonize();
         self::initWorkers();
+        self::installSignal();
         self::saveMasterPid();
         self::forkWorkers();
-        self::installSignal();
         self::displayUI();
         self::resetStd();
         self::monitorWorkers();
@@ -443,6 +443,9 @@ class Worker
         // Only for cli.
         if (php_sapi_name() != "cli") {
             exit("only run in command line mode \n");
+        };
+        if(!extension_loaded('swoole')){
+            exit("swoole extension is needed \n");
         }
     }
 
@@ -591,7 +594,7 @@ class Worker
     protected static function displayUI()
     {
         self::safeEcho("\033[1A\n\033[K-----------------------\033[47;30m WORKERMAN \033[0m-----------------------------\n\033[0m");
-        self::safeEcho('Workerman version:'. Worker::VERSION. "          PHP version:". PHP_VERSION. "\n");
+        self::safeEcho('Swoole version:'. phpversion('swoole'). "          PHP version:". PHP_VERSION. "\n");
         self::safeEcho("------------------------\033[47;30m WORKERS \033[0m-------------------------------\n");
         self::safeEcho("\033[47;30muser\033[0m". str_pad('',
             self::$_maxUserNameLength + 2 - strlen('user')). "\033[47;30mworker\033[0m". str_pad('',
@@ -829,34 +832,7 @@ class Worker
         if (self::$eventLoopClass) {
             return self::$eventLoopClass;
         }
-
-        $loop_name = '';
-        foreach (self::$_availableEventLoops as $name=>$class) {
-            if (extension_loaded($name)) {
-                $loop_name = $name;
-                break;
-            }
-        }
-
-        if ($loop_name) {
-            if (interface_exists('\React\EventLoop\LoopInterface')) {
-                switch ($loop_name) {
-                    case 'libevent':
-                        self::$eventLoopClass = '\Workerman\Events\React\LibEventLoop';
-                        break;
-                    case 'event':
-                        self::$eventLoopClass = '\Workerman\Events\React\ExtEventLoop';
-                        break;
-                    default :
-                        self::$eventLoopClass = '\Workerman\Events\React\StreamSelectLoop';
-                        break;
-                }
-            } else {
-                self::$eventLoopClass = self::$_availableEventLoops[$loop_name];
-            }
-        } else {
-            self::$eventLoopClass = interface_exists('\React\EventLoop\LoopInterface')? '\Workerman\Events\React\StreamSelectLoop':'\Workerman\Events\Select';
-        }
+        self::$eventLoopClass = self::$_availableEventLoops['Swoole'];
         return self::$eventLoopClass;
     }
 
@@ -994,13 +970,6 @@ class Worker
     {
         if(function_exists('swoole_set_process_name')){
             swoole_set_process_name($title);
-        }
-        // >=php 5.5
-        else if (function_exists('cli_set_process_title')) {
-            @cli_set_process_title($title);
-        } // Need proctitle when php<=5.5 .
-        elseif (extension_loaded('proctitle') && function_exists('setproctitle')) {
-            @setproctitle($title);
         }
     }
 
@@ -1343,7 +1312,7 @@ class Worker
         if (!self::$daemonize) {
             self::safeEcho($msg);
         }
-        file_put_contents((string)self::$logFile, date('Y-m-d H:i:s') . ' ' . 'pid:'. getmypid() . ' ' . $msg, FILE_APPEND | LOCK_EX);
+        file_put_contents((string)self::$logFile, date('Y-m-d H:i:s') . ' ' . 'pid:' . getmypid() . ' ' . $msg, FILE_APPEND | LOCK_EX);
     }
 
     /**
