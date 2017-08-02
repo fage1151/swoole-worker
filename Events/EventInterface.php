@@ -29,12 +29,6 @@ interface EventInterface
      */
     const EV_WRITE = 2;
 
-    /**
-     * Timer event.
-     *
-     * @var int
-     */
-    const EV_TIMER = 8;
 
     /**
      * Add event listener to event loop.
