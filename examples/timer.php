@@ -11,7 +11,7 @@ $worker = new Worker();
 
 
 $worker->onWorkerStart = function (Worker $worker) {
-   $timerid = Timer::add(2000,function()use(&$timerid){
+   $timerid = Timer::add(2,function()use(&$timerid){
         echo $timerid."\n";
     },[1,2,3],true);
 
