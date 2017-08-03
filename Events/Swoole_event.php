@@ -33,13 +33,19 @@ class Swoole_event implements EventInterface{
             default :
                 $flag === self::EV_READ ? 1 : 2 ;
                 if($flag == self::EV_READ){
-                    swoole_event_add($fd,$func);
+                    if(isset($this->_allEvents[$fd_key])){
+                        swoole_event_set($fd,$func);
+                    }else{
+                        swoole_event_add($fd,$func,null,SWOOLE_EVENT_READ);
+                    }
                 }else{
-                    swoole_event_add($fd,null,$func,SWOOLE_EVENT_WRITE);
+                    if(isset($this->_allEvents[$fd_key])){
+                        swoole_event_set($fd,null,$func,SWOOLE_EVENT_WRITE);
+                    }else{
+                        swoole_event_add($fd,null,$func,SWOOLE_EVENT_WRITE);
+                    }
                 }
-                $fd_key    = (int)$fd;
                 $this->_allEvents[$fd_key][$flag] = $fd;
-
                 return true;
         }
 
