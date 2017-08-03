@@ -73,15 +73,16 @@ class Timer
                 unset(self::$_tasks[$timerid]);
             }
         };
+        $real_time = $time_interval*1000;
         if ($persistent === true) {
-            $timerid = swoole_timer_tick($time_interval, $real_func);
+            $timerid = swoole_timer_tick($real_time, $real_func);
         } else {
-            $timerid = swoole_timer_after($time_interval, $real_func);
+            $timerid = swoole_timer_after($real_time, $real_func);
         }
         if (!isset(self::$_tasks)) {
             self::$_tasks = array();
         }
-        self::$_tasks[$timerid] = array($func, (array)$args, $persistent, $time_interval);
+        self::$_tasks[$timerid] = array($func, (array)$args, $persistent, $real_time);
         return $timerid;
     }
 

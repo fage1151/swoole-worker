@@ -6,6 +6,8 @@ php_version >= 5.4
 A POSIX compatible operating system (Linux, OSX, BSD)  
 POSIX and Swoole extensions for PHP  
 swoole_version >= 1.7.14
+## Thanks
+
 ## Installation
 
 ```
