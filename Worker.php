@@ -1528,8 +1528,10 @@ class Worker
             }
         }
         // Remove listener for server socket.
-        self::$globalEvent->del($this->_mainSocket, EventInterface::EV_READ);
-        @fclose($this->_mainSocket);
+        if ($this->_mainSocket) {
+            self::$globalEvent->del($this->_mainSocket, EventInterface::EV_READ);
+            @fclose($this->_mainSocket);
+        }
     }
 
     /**
