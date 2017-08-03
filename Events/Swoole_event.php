@@ -31,6 +31,7 @@ class Swoole_event implements EventInterface{
     {
         switch ($flag) {
             default :
+                $fd_key    = (int)$fd;
                 $flag === self::EV_READ ? 1 : 2 ;
                 if($flag == self::EV_READ){
                     if(isset($this->_allEvents[$fd_key])){
