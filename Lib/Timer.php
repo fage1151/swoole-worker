@@ -50,7 +50,7 @@ class Timer
     /**
      * Add a timer.
      *
-     * @param int $time_interval
+     * @param float $time_interval 单位s
      * @param callback $func
      * @param mixed $args
      * @param bool $persistent
@@ -66,6 +66,9 @@ class Timer
         if (!is_callable($func)) {
             echo new Exception("not callable");
             return false;
+        }
+        if($args === null){
+            $args = array();
         }
         $real_func = function () use ($func, $args,$persistent, &$timerid) {
             call_user_func_array($func, $args);
