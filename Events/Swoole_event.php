@@ -29,26 +29,20 @@ class Swoole_event implements EventInterface{
      */
     public function add($fd, $flag, $func, $args = array())
     {
-        switch ($flag) {
-            default :
-                $fd_key    = (int)$fd;
-                $flag === self::EV_READ ? 1 : 2 ;
-                if($flag == self::EV_READ){
-                    if(isset($this->_allEvents[$fd_key])){
-                        swoole_event_set($fd,$func);
-                    }else{
-                        swoole_event_add($fd,$func,null,SWOOLE_EVENT_READ);
-                    }
-                }else{
-                    if(isset($this->_allEvents[$fd_key])){
-                        swoole_event_set($fd,null,$func,SWOOLE_EVENT_WRITE);
-                    }else{
-                        swoole_event_add($fd,null,$func,SWOOLE_EVENT_WRITE);
-                    }
-                }
-                $this->_allEvents[$fd_key][$flag] = $fd;
-                return true;
+        $fd_key    = (int)$fd;
+        $flag === self::EV_READ ? 1 : 2 ;
+        if(isset($this->_allEvents[$fd_key])){
+            $f = 'swoole_event_set';
+        }else{
+            $f = 'swoole_event_add';
         }
+        if($flag == self::EV_READ){
+            $f($fd,$func);
+        }else{
+            $f($fd,null,$func,SWOOLE_EVENT_WRITE);
+        }
+        $this->_allEvents[$fd_key][$flag] = $fd;
+        return true;
 
     }
 
