@@ -437,6 +437,7 @@ Worker::runAll();
 
 ### Async Redis Client
 ```
+使用Redis客户端，需要安装hiredis库
 编译swoole时，在configure指令中加入--enable-async-redis
 ```
 Document https://wiki.swoole.com/wiki/page/p-redis.html
