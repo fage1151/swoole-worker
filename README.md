@@ -8,6 +8,9 @@ POSIX and Swoole extensions for PHP
 swoole_version >= 1.7.14
 ## Thanks
 
+ * [workerman](https://github.com/walkor/Workerman)Workerman是一款纯PHP开发的开源高性能的PHP socket 服务器框架
+ * [swoole](https://github.com/swoole/swoole-src)PHP的异步、并行、高性能网络通信引擎,使用纯C语言编写
+
 ## Installation
 
 ```
