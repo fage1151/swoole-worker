@@ -1,5 +1,7 @@
 # swoole-worker
 ## What is it
+
+[![Join the chat at https://gitter.im/swoole-worker/Lobby](https://badges.gitter.im/swoole-worker/Lobby.svg)](https://gitter.im/swoole-worker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 此项目是workerman(v3.4.5)的swoole移植版本，移除了对pcntl,libevent,event扩展的依赖,转而使用swoole提供的swoole_process和swoole_event，定时器采用swoole的swoole_timer
 ## Requires
 php_version >= 5.4  
