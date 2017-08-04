@@ -484,7 +484,7 @@ Workerman手册　http://doc.workerman.net/
 ```php test.php start -d  ```  
 ![workerman start](http://www.workerman.net/img/workerman-start.png)  
 ```php test.php status  ```  
-![workerman satus](http://www.workerman.net/img/workerman-status.png?a=123)
+![workerman satus](http://www.workerman.net/img/workerman-status.png?a=123)  
 ```php test.php stop  ```  
 ```php test.php restart  ```  
 ```php test.php reload  ```  
