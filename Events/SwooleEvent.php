@@ -1,7 +1,7 @@
 <?php
 namespace Workerman\Events;
 
-class Swoole_event implements EventInterface{
+class SwooleEvent implements EventInterface{
     /**
      * Event base.
      *
