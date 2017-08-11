@@ -7,7 +7,7 @@
 php_version >= 5.4  
 A POSIX compatible operating system (Linux, OSX, BSD)  
 POSIX and Swoole extensions for PHP  
-swoole_version >= 1.7.14
+swoole_version >= 1.9.18 or 2.0.8
 ## Thanks
 
  * [workerman](https://github.com/walkor/Workerman)  Workerman是一款纯PHP开发的开源高性能的PHP socket 服务器框架
