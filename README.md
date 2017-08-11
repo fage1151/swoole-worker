@@ -2,7 +2,7 @@
 [![Join the chat at https://gitter.im/swoole-worker/Lobby](https://badges.gitter.im/swoole-worker/Lobby.svg)](https://gitter.im/swoole-worker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ## What is it
 
-此项目是workerman(v3.4.5)的swoole移植版本，移除了对pcntl,libevent,event扩展的依赖,转而使用swoole提供的swoole_process和swoole_event，定时器采用swoole的swoole_timer
+此项目是workerman(v3.4.5)的swoole移植版本，移除了对pcntl,libevent,event,ev扩展的依赖,转而使用swoole提供的swoole_process和swoole_event，定时器采用swoole的swoole_timer
 ## Requires
 php_version >= 5.4  
 A POSIX compatible operating system (Linux, OSX, BSD)  
@@ -12,6 +12,9 @@ swoole_version >= 1.9.18 or 2.0.8
 
  * [workerman](https://github.com/walkor/Workerman)  Workerman是一款纯PHP开发的开源高性能的PHP socket 服务器框架
  * [swoole](https://github.com/swoole/swoole-src)  PHP的异步、并行、高性能网络通信引擎,使用纯C语言编写
+ * Workerman文档地址 http://doc.workerman.net/
+ * Swoole文档地址 https://wiki.swoole.com/wiki/index
+
 
 ## Installation
 
@@ -475,7 +478,7 @@ Worker::runAll();
 ```
 
 ### Document
-IDE自动提示工具 swoole-ide-helper：https://github.com/eaglewu/swoole-ide-helper  
+IDE自动提示工具  https://github.com/eaglewu/swoole-ide-helper  
 Swoole官方网站　https://wiki.swoole.com/wiki/index/prid-1  
 Workerman手册　http://doc.workerman.net/
 
