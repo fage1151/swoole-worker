@@ -23,7 +23,7 @@ composer require fage1151/swoole-worker
 ```
 
 ## Basic Usage
-用法与workerman兼容,第三方组件可能存在不兼容的情况
+用法与workerman兼容
 ### A websocket server 
 ```php
 <?php
