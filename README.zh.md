@@ -483,11 +483,17 @@ Swoole官方网站　https://wiki.swoole.com/wiki/index/prid-1
 Workerman手册　http://doc.workerman.net/
 
 ## 使用命令
+以debug模式启动
 ```php test.php start  ```  
+以daemonize模式启动
 ```php test.php start -d  ```  
 ![workerman start](http://www.workerman.net/img/workerman-start.png)  
+查看进程状态
 ```php test.php status  ```  
 ![workerman satus](http://www.workerman.net/img/workerman-status.png?a=123)  
+停止运行
 ```php test.php stop  ```  
+重新启动
 ```php test.php restart  ```  
+平滑重启
 ```php test.php reload  ```  
