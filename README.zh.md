@@ -485,7 +485,7 @@ Workerman手册　http://doc.workerman.net/
 ## 使用命令
 以debug模式启动
 ```php test.php start  ```  
-以daemonize模式启动
+以daemon模式启动
 ```php test.php start -d  ```  
 ![workerman start](http://www.workerman.net/img/workerman-start.png)  
 查看进程状态
