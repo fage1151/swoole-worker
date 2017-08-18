@@ -9,10 +9,10 @@ use \Workerman\Worker;
 require_once '../Autoloader.php';
 $worker = new Worker('http://127.0.0.1:8093');
 $worker->onConnect = function (\Workerman\Connection\ConnectionInterface $connect) {
-    $connect->send('connect success');
+    //$connect->send('connect success');
 };
 $worker->onMessage = function (\Workerman\Connection\ConnectionInterface $connect, $data) {
-    $connect->send($data);
+    $connect->send(json_encode($data));
 };
 
 $worker->onWorkerStart = function (Worker $worker) {
