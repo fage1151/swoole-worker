@@ -1,13 +1,16 @@
 # swoole-worker
 [![Join the chat at https://gitter.im/swoole-worker/Lobby](https://badges.gitter.im/swoole-worker/Lobby.svg)](https://gitter.im/swoole-worker/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-## What is it
+## 关于本项目
 
 此项目是workerman(v3.4.5)的swoole移植版本，移除了对pcntl,libevent,event,ev扩展的依赖,转而使用swoole提供的swoole_process和swoole_event，定时器采用swoole的swoole_timer,server采用stream扩展
+
 ## 环境依赖
+
 PHP版本大于等于 5.4  
 POSIX操作系统(Linux, OSX, BSD)  
 POSIX和Swoole扩展  
-swoole扩展版本大于等于1.9.18或者大于等于2.0.8
+swoole扩展版本不小于1.9.18或者不小于2.0.8
+
 ## 致谢
 
  * [workerman](https://github.com/walkor/Workerman)  Workerman是一款纯PHP开发的开源高性能的PHP socket 服务器框架
