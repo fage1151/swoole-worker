@@ -8,7 +8,7 @@
 
 PHP版本大于等于 5.4 (推荐PHP7)  
 POSIX操作系统(Linux, OSX, BSD)  
-POSIX和Swoole扩展  
+Posix和Swoole扩展  
 swoole扩展版本不小于1.9.18或者不小于2.0.8
 
 ## 致谢
