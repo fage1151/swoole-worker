@@ -486,6 +486,7 @@ Worker::runAll();
 安装:
 
 ```
+pecl install zmq
 composer require swoole/zmq
 ```
 

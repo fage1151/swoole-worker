@@ -4,6 +4,7 @@
  * php start.php start
  */
 /**
+ * pecl install zmq
  * composer require swoole/zmq
  */
 require_once 'vendor/autoload.php';
