@@ -483,7 +483,7 @@ Worker::runAll();
 
 ### 异步 Zmq 客户端
 
-安装
+安装:
 
 ```
 composer require swoole/zmq
@@ -493,7 +493,6 @@ composer require swoole/zmq
 <?php
 require_once 'vender/autoload.php';
 use Workerman\Worker;
-use \Swoole\Redis;
 $worker = new Worker('tcp://0.0.0.0:6161');
 $worker->onWorkerStart = function () {
 $zmq = new Swoole\Async\ZMQ();
