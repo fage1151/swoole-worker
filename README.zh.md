@@ -482,6 +482,9 @@ Worker::runAll();
 
 
 ### 异步 Zmq 客户端
+
+安装
+
 ```
 composer require swoole/zmq
 ```
@@ -507,6 +510,7 @@ $worker->onMessage = function ($connection, $data) {
 
 };
 Worker::runAll();
+```
 
 ### 文档
 IDE自动提示工具  https://github.com/eaglewu/swoole-ide-helper  
