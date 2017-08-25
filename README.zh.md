@@ -486,6 +486,7 @@ Worker::runAll();
 安装:
 
 ```
+apt-get install libzmq-dev
 pecl install zmq
 composer require swoole/zmq
 ```
