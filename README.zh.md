@@ -480,10 +480,38 @@ $worker->onMessage = function ($connection, $data) {
 Worker::runAll();
 ```
 
+
+### 异步 Zmq 客户端
+```
+composer require swoole/zmq
+```
+
+```php
+<?php
+require_once 'vender/autoload.php';
+use Workerman\Worker;
+use \Swoole\Redis;
+$worker = new Worker('tcp://0.0.0.0:6161');
+$worker->onWorkerStart = function () {
+$zmq = new Swoole\Async\ZMQ();
+$zmq->connect('tcp://0.0.0.0:5555');
+Swoole\Timer::tick(1000, function () use ($zmq)
+{
+    static $i = 0;
+    $msg = "hello-" . $i++;
+    echo "Sending: $msg\n";
+    $zmq->send($msg);
+});
+};
+$worker->onMessage = function ($connection, $data) {
+
+};
+Worker::runAll();
+
 ### 文档
 IDE自动提示工具  https://github.com/eaglewu/swoole-ide-helper  
-Swoole官方网站　https://wiki.swoole.com/wiki/index/prid-1  
-Workerman手册　http://doc.workerman.net/
+Swoole官方网站  https://wiki.swoole.com/wiki/index/prid-1  
+Workerman手册  http://doc.workerman.net/
 
 ## 使用命令
 以debug模式启动

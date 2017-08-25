@@ -86,7 +86,7 @@ class SwooleEvent implements EventInterface{
      */
     public function loop()
     {
-        return true;
+        swoole_event_wait();
     }
 
     /**
