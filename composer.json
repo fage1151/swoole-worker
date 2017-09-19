@@ -1,7 +1,7 @@
 {
     "name": "fage1151/swoole-worker",
     "description": "Event-driven, Swoole for Workerman",
-    "keywords": ["socket","event","swoole","workerman"],
+    "keywords": ["socket","event","async","coroutine","swoole","workerman"],
     "license": "Apache",
     "require": {
         "php": ">=5.4.0",
