@@ -6,10 +6,10 @@
 
 ## 环境依赖
 
-PHP版本大于等于 5.4 (推荐PHP7及以上版本)  
-POSIX操作系统(Linux, OSX, BSD)  
-Posix和Swoole扩展  
-swoole扩展版本不小于1.9.18或者不小于2.0.8(2.0.10及其以上版本支持协程)
+* PHP版本大于等于 5.4 (推荐PHP7及以上版本)  
+* POSIX操作系统(Linux, OSX, BSD)  
+* Posix和Swoole扩展  
+* Swoole扩展版本不小于1.9.18或者不小于2.0.8(2.0.10及其以上版本支持协程)
 
 ## 致谢
 
