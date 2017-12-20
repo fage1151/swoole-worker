@@ -43,6 +43,28 @@ Swoole\Coroutine::create(function() {
     });
 });
 ```
+### 创建空服务
+```php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use \Workerman\Worker;
+use \Workerman\Lib\Timer;
+
+$task = new Worker();
+$task->onWorkerStart = function($task)
+{
+    // 每2.5秒执行一次
+    $time_interval = 2.5;
+    Timer::add($time_interval, function()
+    {
+        echo "task run\n";
+    });
+};
+
+// 运行worker
+Worker::runAll();
+```
 ### 创建websocket服务 
 ```php
 <?php
