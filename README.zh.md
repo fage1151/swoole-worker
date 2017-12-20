@@ -30,12 +30,12 @@ composer require fage1151/swoole-worker
 ### 协程用法
 ```php
 <?php
-Swoole\Coroutine::create(function() use ($i) {
+Swoole\Coroutine::create(function() {
     $redis = new Swoole\Coroutine\Redis();
     $res = $redis->connect('127.0.0.1', 6379);
     $ret = $redis->incr('coroutine');
     $redis->close();
-    Swoole\Coroutine::create(function() use ($i) {
+    Swoole\Coroutine::create(function() {
         $redis = new Swoole\Coroutine\Redis();
         $res = $redis->connect('127.0.0.1', 6379);
         $ret = $redis->set('coroutine_i', 50);
