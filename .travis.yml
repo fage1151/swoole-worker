@@ -7,3 +7,4 @@ php:
 install:
   - pecl install swoole
   - composer update
+script: phpunit -v
